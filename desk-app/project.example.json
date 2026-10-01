@@ -1,0 +1,16 @@
+{
+  "version": 1,
+
+  "_说明": "这是模板。删掉所有 _ 开头的注释字段，填上你自己的值，存成 project.json 放在工程根目录。",
+
+  "name": "adder",
+  "top": "adder",
+  "dut": "adder.v",
+  "tb": "tb_adder.v",
+  "vcd": "adder.vcd",
+
+  "_可选": "下面三项不写也会自动补默认值",
+  "assertPattern": "\\b\\w+\\s*=\\s*(\\d+)",
+  "timeout": 240,
+  "distro": "Ubuntu-24.04"
+}

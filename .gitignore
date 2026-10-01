@@ -1,0 +1,57 @@
+# ---------------------------------------------------------------
+#  这个仓库是「Verilog 工作台 + 生成引擎」，由两部分组成：
+#     desk-app/   网页工作台 + 本地服务（探测真实跑 EDA 工具）
+#     quench/     从中文需求生成 Verilog 的引擎
+# ---------------------------------------------------------------
+
+# ---- 凭证：绝对不要提交 ----
+# 访问口令（对外提供工作台时用）
+access_token.txt
+# DeepSeek API key —— 提交了就是"谁 clone 谁花你的钱"
+api_key.txt
+# DSH 的凭证文件（如果有人不小心复制进来）
+.credentials.yaml
+
+# ---- 运行期产物：每次探测都会重新生成 ----
+board.json
+sim.vvp
+*.vvp
+*.vcd
+sim.log
+public-url.txt
+cf_tunnel.log
+
+# ---- 构建产物：由 build.py / build_demo.py / build_split.py 生成 ----
+# 别人 clone 下来跑一次 build.py 就有了，没必要提交
+workbench.html
+release.html
+pub-split/
+
+# ---- 大二进制：自己去 Release 页下载 ----
+# cloudflared.exe 52.8 MB，要的人从 cloudflare 的 release 页拿
+cloudflared.exe
+# 黑洞动画 2.6 MB，只有可编辑版的手动开关用得到
+# 需要的话跑 tools/make_blackhole.py 重新生成
+blackhole.gif
+blackhole.disabled
+
+# ---- 生成的工程目录：是产物不是源码 ----
+demo-*/
+drop-*/
+gen-*/
+hard-*/
+
+# ---- 手动/编辑器留的备份 ----
+*.bak
+*.orig
+*~
+
+# ---- 编辑器与系统杂物 ----
+__pycache__/
+*.pyc
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+*.zip
+*.zip.001

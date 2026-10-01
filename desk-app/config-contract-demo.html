@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<title>配置契约 · 实际运行结果</title>
+<style>
+  :root{--bg:#f7f5f0;--card:#fff;--ink:#1d1d1f;--ink2:#5c5c60;--ink3:#8e8e93;
+        --line:#e6e2d9;--ok:#1f8a52;--okbg:#eaf7ef;--err:#c0392b;--errbg:#fdecea;
+        --warn:#a86a00;--warnbg:#fff6e5;--mono:ui-monospace,SFMono-Regular,Consolas,monospace}
+  *{box-sizing:border-box}
+  body{margin:0;padding:34px 30px 50px;background:var(--bg);color:var(--ink);
+       font:15px/1.65 -apple-system,"Segoe UI","Microsoft YaHei",sans-serif}
+  h1{font-size:26px;margin:0 0 6px;letter-spacing:-.02em}
+  .lede{color:var(--ink2);margin:0 0 4px;font-size:15px}
+  .cmd{font-family:var(--mono);font-size:13px;color:var(--ink3);margin:14px 0 30px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+        margin-bottom:22px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+  .card header{display:flex;justify-content:space-between;align-items:flex-start;
+        gap:16px;padding:18px 22px;border-bottom:1px solid var(--line);background:#fcfbf8}
+  .card h2{font-size:17px;margin:0 0 2px}
+  .sub{margin:0;color:var(--ink2);font-size:13.5px}
+  .badge{flex:none;font-size:13px;font-weight:600;padding:5px 13px;border-radius:999px}
+  .badge.pass{background:var(--okbg);color:var(--ok)}
+  .badge.fail{background:var(--errbg);color:var(--err)}
+  .body{display:grid;grid-template-columns:1fr 1.15fr;gap:0}
+  .col{padding:18px 22px}
+  .col:first-child{border-right:1px solid var(--line);background:#fdfcfa}
+  .label{font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+         color:var(--ink3);margin:0 0 8px}
+  .col .label:not(:first-child){margin-top:18px}
+  pre{margin:0;font-family:var(--mono);font-size:12.5px;line-height:1.75;
+      background:#fff;border:1px solid var(--line);border-radius:9px;padding:11px 13px;
+      overflow-x:auto;white-space:pre-wrap;word-break:break-all}
+  pre.tree{color:var(--ink2)}
+  .note{margin:12px 0 0;font-size:12.5px;color:var(--ink3);line-height:1.7}
+  .iss{display:flex;gap:11px;padding:12px 14px;border-radius:10px;margin-bottom:10px;
+       align-items:flex-start}
+  .iss:last-child{margin-bottom:0}
+  .iss.err{background:var(--errbg)} .iss.warn{background:var(--warnbg)}
+  .iss.good{background:var(--okbg)}
+  .tag{flex:none;font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:6px;
+       background:rgba(0,0,0,.07);margin-top:1px}
+  .iss.err .tag{color:var(--err)} .iss.warn .tag{color:var(--warn)}
+  .iss.good .tag{color:var(--ok)}
+  .msg{font-size:13.5px;line-height:1.7}
+  .fix{font-size:12.5px;color:var(--ink2);margin-top:5px;line-height:1.7}
+  .kvs{margin-top:9px;display:grid;grid-template-columns:auto 1fr;gap:2px 14px;
+       font-family:var(--mono);font-size:12.5px}
+  .kv{display:contents}
+  .kv span{color:var(--ink3)}
+  .kv b{font-weight:600}
+  footer{color:var(--ink3);font-size:12.5px;text-align:center;margin-top:8px}
+</style></head><body>
+  <h1>配置契约 · 实际运行结果</h1>
+  <p class="lede">脚本不认识你的工程，它只读工程目录里的 <b>project.json</b>。
+     下面三个工程都用同一个校验器跑了一遍。</p>
+  <p class="cmd">python project_config.py &lt;工程目录&gt;</p>
+  
+        <section class="card">
+          <header>
+            <div><h2>工程 A · 你现在的 counter</h2>
+                 <p class="sub">配置写对了，校验通过</p></div>
+            <span class="badge pass">通过</span>
+          </header>
+          <div class="body">
+            <div class="col">
+              <div class="label">工程目录结构</div>
+              <pre class="tree">project.json
+counter.v
+tb_counter.v</pre>
+              <div class="label">project.json</div>
+              <pre class="json">{
+  &quot;version&quot;: 1,
+  &quot;name&quot;: &quot;4bit-counter&quot;,
+  &quot;top&quot;: &quot;counter&quot;,
+  &quot;dut&quot;: &quot;counter.v&quot;,
+  &quot;tb&quot;: &quot;tb_counter.v&quot;,
+  &quot;vcd&quot;: &quot;counter.vcd&quot;,
+  &quot;timeout&quot;: 240,
+  &quot;distro&quot;: &quot;Ubuntu-24.04&quot;
+}</pre>
+              <p class="note">只有 5 个字段是必需的，version / timeout / distro 会自动补默认值。</p>
+            </div>
+            <div class="col">
+              <div class="label">校验器输出</div>
+              <div class="iss good"><span class="tag">通过</span><div><div class="msg">配置有效，解析结果（默认值已补齐）：</div><div class="kvs"><div class="kv"><span>version</span><b>1</b></div><div class="kv"><span>name</span><b>4bit-counter</b></div><div class="kv"><span>top</span><b>counter</b></div><div class="kv"><span>dut</span><b>counter.v</b></div><div class="kv"><span>tb</span><b>tb_counter.v</b></div><div class="kv"><span>vcd</span><b>counter.vcd</b></div><div class="kv"><span>timeout</span><b>240</b></div><div class="kv"><span>distro</span><b>Ubuntu-24.04</b></div></div></div></div>
+            </div>
+          </div>
+        </section>
+        <section class="card">
+          <header>
+            <div><h2>工程 B · 文件名打错了</h2>
+                 <p class="sub">写错一个字，校验器把你拦住并告诉你错在哪</p></div>
+            <span class="badge fail">未通过</span>
+          </header>
+          <div class="body">
+            <div class="col">
+              <div class="label">工程目录结构</div>
+              <pre class="tree">project.json
+adder.v
+tb_adder.v</pre>
+              <div class="label">project.json</div>
+              <pre class="json">{
+  &quot;name&quot;: &quot;adder-test&quot;,
+  &quot;dut&quot;: &quot;adder.v&quot;,
+  &quot;tb&quot;: &quot;tb_addr.v&quot;,
+  &quot;vcd&quot;: &quot;adder.vcd&quot;,
+  &quot;timeout&quot;: &quot;240&quot;
+}</pre>
+              <p class="note">tb 写成了 tb_addr.v（少了个 e），而且漏了 top，timeout 写成了字符串。</p>
+            </div>
+            <div class="col">
+              <div class="label">校验器输出</div>
+              <div class="iss err"><span class="tag">拦下</span><div><div class="msg">缺少必填字段 &quot;top&quot;：综合的顶层模块名，对应 yosys 的 synth -top &lt;top&gt;。必须是 Verilog 里 module 后面的名字，不是文件名。</div><div class="fix">→ 在 project.json 里加上 &quot;top&quot;: ...</div></div></div><div class="iss err"><span class="tag">拦下</span><div><div class="msg">&quot;tb&quot; 指向的文件不存在：tb_addr.v（完整路径 C:\Users\jinnidai2008\AppData\Local\Temp\tmpwe3mm25y\tb_addr.v）</div><div class="fix">→ 工程目录里现有的 .v 文件：adder.v、tb_adder.v</div></div></div><div class="iss err"><span class="tag">拦下</span><div><div class="msg">&quot;timeout&quot; 应为整数，实际是字符串（&#x27;240&#x27;）。</div><div class="fix">→ 每条 EDA 命令的超时（秒）。大工程综合慢就调大。</div></div></div>
+            </div>
+          </div>
+        </section>
+        <section class="card">
+          <header>
+            <div><h2>工程 C · 一个全新的加法器</h2>
+                 <p class="sub">复制模板改 5 行，新工程直接可用</p></div>
+            <span class="badge pass">通过</span>
+          </header>
+          <div class="body">
+            <div class="col">
+              <div class="label">工程目录结构</div>
+              <pre class="tree">project.json
+adder.v
+tb_adder.v</pre>
+              <div class="label">project.json</div>
+              <pre class="json">{
+  &quot;name&quot;: &quot;adder&quot;,
+  &quot;top&quot;: &quot;adder&quot;,
+  &quot;dut&quot;: &quot;adder.v&quot;,
+  &quot;tb&quot;: &quot;tb_adder.v&quot;,
+  &quot;vcd&quot;: &quot;adder.vcd&quot;
+}</pre>
+              <p class="note">只填了必需的 5 项，其余全部走默认值 —— 这就是「新工程」的全部成本。</p>
+            </div>
+            <div class="col">
+              <div class="label">校验器输出</div>
+              <div class="iss good"><span class="tag">通过</span><div><div class="msg">配置有效，解析结果（默认值已补齐）：</div><div class="kvs"><div class="kv"><span>version</span><b>1</b></div><div class="kv"><span>name</span><b>adder</b></div><div class="kv"><span>top</span><b>adder</b></div><div class="kv"><span>dut</span><b>adder.v</b></div><div class="kv"><span>tb</span><b>tb_adder.v</b></div><div class="kv"><span>vcd</span><b>adder.vcd</b></div><div class="kv"><span>timeout</span><b>240</b></div><div class="kv"><span>distro</span><b>Ubuntu-24.04</b></div></div></div></div>
+            </div>
+          </div>
+        </section>
+  <footer>由 demo_config.py 自动生成 —— 每次运行都会重新真实执行校验器，不是写死的截图</footer>
+</body></html>
